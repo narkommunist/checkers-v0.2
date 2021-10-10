@@ -3,14 +3,7 @@ from consts import *
 
 class Board:
     def __init__(self):
-        self.field = [[None]*8,
-                      [None]*8,
-                      [None]*8,
-                      [None]*8,
-                      [None]*8,
-                      [None]*8,
-                      [None]*8,
-                      [None]*8,]
+        self.field = []
         self.b_left = self.w_left = 12
         self.b_kings = self.w_kings = 0
 
@@ -20,13 +13,13 @@ class Board:
             else: s = 0         # TRY TO FIX IT
             for j in range(s, 8, 2):
                 print (i, j)
-                self.field[i][j] = Item(WHITE)
+                self.field.append(Item(WHITE, i, j))
                 
         for i in range(3):
             if i == 1: s = 0    # <------------
             else: s = 1         # TRY TO FIX IT
             for j in range(s, 8, 2):
-                self.field[i][j] = Item(BLACK)
+                self.field.append(Item(BLACK, i, j))
 
     '''def debug(self):
         for i in self.field:
@@ -36,9 +29,11 @@ class Board:
 
 
 class Item:
-    def __init__(self, col):
+    def __init__(self, col, x, y):
         self.color = col
         self.marked = False
+        self.x = x
+        self.y = y
 
     def select(self):
         self.marked = True
@@ -55,6 +50,7 @@ class Item:
 
     def get_color(self):
         return self.color
+    
 
 '''b = Board()
 b.generate()
