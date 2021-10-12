@@ -1,4 +1,3 @@
-import pygame
 from consts import *
 
 class Board:
@@ -13,33 +12,30 @@ class Board:
             else: s = 0         # TRY TO FIX IT
             for j in range(s, 8, 2):
                 print (i, j)
-                self.field.append(Item(WHITE, i, j))
+                self.field.append(Checker(WHITE, j, i))
                 
         for i in range(3):
             if i == 1: s = 0    # <------------
             else: s = 1         # TRY TO FIX IT
             for j in range(s, 8, 2):
-                self.field.append(Item(BLACK, i, j))
+                self.field.append(Checker(BLACK, j, i))
 
-    '''def debug(self):
-        for i in self.field:
-            print(i)'''
     def get_elems(self):
         return self.field
 
 
-class Item:
+class Checker:
     def __init__(self, col, x, y):
         self.color = col
         self.marked = False
         self.x = x
         self.y = y
 
-    def select(self):
+    def select(self):   #   <---FIX
         self.marked = True
-        x1, y1 = self.x + 100, self.y - 100
+        '''x1, y1 = self.x + 100, self.y - 100
         x2, y2 = self.x - 100, self.y - 100
-        self.show_tip(x1, y1)
+        self.show_tip(x1, y1)'''
         print('[TIP SHOWED]')
     
     def unselect(self):
@@ -50,7 +46,11 @@ class Item:
 
     def get_color(self):
         return self.color
-    
+
+    def ind_to_coord(self):
+        y = self.y * 100 + 50
+        x = (8 - self.x)*100 - 50
+        return [x, y]
 
 '''b = Board()
 b.generate()

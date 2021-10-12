@@ -1,5 +1,4 @@
 import pygame
-from consts import *
 from classes import *
 
 pictures = { 
@@ -7,7 +6,7 @@ pictures = {
     WHITE: './sourses/white.png'
 }
 
-class Drawing:
+class Drawer:
     def __init__(self, board, win):
         self.board = board
         self.win = win
@@ -19,18 +18,18 @@ class Drawing:
         #win.fill(BLACK)
         self.win.blit(image, (0, 0))
         for i in self.board.get_elems():
-            self.draw_item(i)
+            self.draw_Checker(i)
                     
-    def draw_item(self, checker:Item):
-        y = checker.y * 100 + 50
-        x = (8 - checker.x)*100 - 50
+    def draw_Checker(self, checker:Checker):
+        x = checker.ind_to_coord()[0]
+        y = checker.ind_to_coord()[1]
         img = pictures[checker.color]
-        #if self.marked: img = './sourses/selected.png'
+        if checker.marked: img = './sourses/selected.png'
 
         IMAGE = pygame.image.load(img).convert_alpha()
         IMAGE = pygame.transform.scale(IMAGE, (90, 90))
         rect = IMAGE.get_rect()
-        rect.center = (y, x)
+        rect.center = (x, y)
         self.win.blit(IMAGE, rect)
 
     def show_tip(self, x, y):
@@ -41,3 +40,10 @@ class Drawing:
         rect = IMAGE.get_rect()
         rect.center = (x, y)
         self.win.blit(IMAGE, rect)
+
+    def check_press(self, m_pos, checker:Checker):
+        x = checker.ind_to_coord()[0]
+        y = checker.ind_to_coord()[1]
+        if (x-50 <= m_pos[0] <= x+50) and (y-50 <= m_pos[1] <= y+50):
+            print('[',checker.x, checker.y, ']')
+        return True if (x-50 <= m_pos[0] <= x+50) and (y-50 <= m_pos[1] <= y+50) else False
