@@ -21,10 +21,9 @@ def main():
 			if event.type == pygame.MOUSEBUTTONDOWN:
 				print('[BUTTON_PRESSED]')
 				for j in board.get_elems():
-					#print(drawer.check_press(cur_pos, j))
 					if drawer.check_press(cur_pos, j):
 						j.select()
-						print('[SELECT CHECKER]')
+						drawer.show_tip(j.ind_to_coord())
 					else:
 						j.unselect()
 		drawer.draw_board()

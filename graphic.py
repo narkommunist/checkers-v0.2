@@ -1,10 +1,7 @@
 import pygame
 from classes import *
 
-pictures = { 
-    BLACK: './sourses/black.png',
-    WHITE: './sourses/white.png'
-}
+
 
 class Drawer:
     def __init__(self, board, win):
@@ -32,14 +29,18 @@ class Drawer:
         rect.center = (x, y)
         self.win.blit(IMAGE, rect)
 
-    def show_tip(self, x, y):
-        print('[CALCULATING TIP]')
+    def show_tip(self, coords):
+        print('[CALCULATING TIPS]')
         img = './sourses/tip.png'
         IMAGE = pygame.image.load(img).convert_alpha()
         IMAGE = pygame.transform.scale(IMAGE, (30, 30))
         rect = IMAGE.get_rect()
-        rect.center = (x, y)
-        self.win.blit(IMAGE, rect)
+        x1, y1 = coords[0] + 100, coords[1] - 100
+        '''rect.center = (x1, y1)
+        self.win.blit(IMAGE, rect)'''
+        pygame.draw.circle(self.win, GREEN, (x1, y1), 50)
+        print('[TIPS DISPLAYED]')
+        print(x1, y1)
 
     def check_press(self, m_pos, checker:Checker):
         x = checker.ind_to_coord()[0]

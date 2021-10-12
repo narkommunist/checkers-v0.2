@@ -1,4 +1,10 @@
+import pygame
 from consts import *
+
+pictures = { 
+    BLACK: './sourses/black.png',
+    WHITE: './sourses/white.png'
+}
 
 class Board:
     def __init__(self):
@@ -24,19 +30,20 @@ class Board:
         return self.field
 
 
-class Checker:
+class Checker(pygame.sprite.Sprite):
     def __init__(self, col, x, y):
+        pygame.sprite.Sprite.__init__(self)
         self.color = col
+        img = pictures[col]
+        self.image = pygame.image.load(img).convert_alpha()
+        self.rect = self.image.get_rect(center = ((8 - x)*100 - 50, y * 100 + 50))
         self.marked = False
         self.x = x
         self.y = y
 
     def select(self):   #   <---FIX
         self.marked = True
-        '''x1, y1 = self.x + 100, self.y - 100
-        x2, y2 = self.x - 100, self.y - 100
-        self.show_tip(x1, y1)'''
-        print('[TIP SHOWED]')
+        #x2, y2 = self.x - 100, self.y - 100
     
     def unselect(self):
         self.marked = False
@@ -52,6 +59,9 @@ class Checker:
         x = (8 - self.x)*100 - 50
         return [x, y]
 
-'''b = Board()
-b.generate()
-b.debug()'''
+    def move(self, place):
+        x = place[0]
+        y = place[1]
+        self.rect.x = x
+        self.rect.y = y
+    
