@@ -1,12 +1,14 @@
 import pygame
-from checkers.constants import*
-from checkers.game import*
-#from minimax.algorithm import minimax
+import time
+from constants import*
+#from game import*
 
 FPS = 60
 
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Ultra-Checkers HD')
+icon = pygame.image.load('./sourses/icon.png')
+pygame.display.set_icon(icon)
 
 def get_row_col_from_mouse(pos):
     x, y = pos
@@ -18,7 +20,8 @@ def main():
     run = True
     clock = pygame.time.Clock()
     game = Game(WIN)
-
+    start = time.time()
+    is_ended = True
     while run:
         clock.tick(FPS)
 
@@ -29,6 +32,7 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
+                is_ended = False
             
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
@@ -36,7 +40,11 @@ def main():
                 game.select(row, col)
 
         game.update()
-    
+    stop = time.time()
+    timer = stop - start
+    if is_ended:
+        #game.board.endgame(timer)
+        pass
     pygame.quit()
 
 main()
